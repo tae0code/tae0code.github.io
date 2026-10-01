@@ -1,0 +1,54 @@
+---
+import '@fontsource-variable/manrope';
+import '@fontsource/ibm-plex-mono/400.css';
+import '@fontsource/ibm-plex-mono/500.css';
+import '../styles/global.css';
+import Icon from '../components/Icon.astro';
+import { profile } from '../data/profile';
+import { url } from '../lib/paths';
+interface Props { title?: string; description?: string; active?: string }
+const { title = 'A little space for big ideas', description = profile.intro, active = 'home' } = Astro.props;
+const nav = [{ name: 'Home', key: 'home', path: '' }, { name: 'Work', key: 'work', path: 'work/' }, { name: 'Writing', key: 'writing', path: 'writing/' }, { name: 'About', key: 'about', path: 'about/' }];
+---
+<!doctype html>
+<html lang="ko" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#141613" />
+    <meta property="og:title" content={`${title} — ${profile.name}`} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+    <link rel="icon" type="image/svg+xml" href={url('favicon.svg')} />
+    <link rel="alternate" type="application/rss+xml" title={`${profile.name} — Writing`} href={url('rss.xml')} />
+    <title>{title} — {profile.name}</title>
+    <script is:inline>
+      try { const t = localStorage.getItem('theme'); if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t; } catch {}
+    </script>
+  </head>
+  <body>
+    <a href="#main" class="skip-link">본문으로 건너뛰기</a>
+    <div class="reading-progress" aria-hidden="true"></div>
+    <header class="site-header">
+      <a class="brand" href={url()} aria-label={`${profile.name} 홈`}><span class="brand-mark"><Icon name="terminal" size={19} /></span><span>{profile.name}<span class="accent">.</span></span></a>
+      <nav class="desktop-nav" aria-label="주 메뉴">{nav.map(item => <a href={url(item.path)} class:list={['nav-link', { active: active === item.key }]} aria-current={active === item.key ? 'page' : undefined}>{item.name}</a>)}</nav>
+      <div class="header-actions">
+        <button class="icon-button theme-toggle" aria-label="밝은 테마로 변경"><Icon name="sun" /><Icon name="moon" /></button>
+        <a class="resume-link" href={url('resume/')}><Icon name="file" size={16} /><span>Résumé</span></a>
+        <button class="icon-button menu-toggle" aria-expanded="false" aria-controls="mobile-nav" aria-label="메뉴 열기"><Icon name="menu" /></button>
+      </div>
+      <nav id="mobile-nav" class="mobile-nav" aria-label="모바일 메뉴" hidden>{nav.map(item => <a href={url(item.path)} aria-current={active === item.key ? 'page' : undefined}>{item.name}</a>)}<a href={url('resume/')}>Résumé</a></nav>
+    </header>
+    <main id="main"><slot /></main>
+    <footer class="site-footer container">
+      <div class="footer-main"><a class="brand" href={url()}><span class="brand-mark"><Icon name="terminal" size={19} /></span><span>{profile.name}<span class="accent">.</span></span></a><p>A work in progress. Just like me.</p><a class="back-top" href="#main">Back to top <span aria-hidden="true">↑</span></a></div>
+      <div class="footer-bottom"><span>© {new Date().getFullYear()} {profile.name}</span><span>BUILT WITH CURIOSITY & A LITTLE CAFFEINE</span><span class="footer-time" aria-label="한국 현재 시각">SEOUL <span data-clock>UTC+09:00</span></span></div>
+    </footer>
+    <div id="toast" role="status" aria-live="polite" class="toast"></div>
+    <script>
+      import '../scripts/site';
+    </script>
+  </body>
+</html>

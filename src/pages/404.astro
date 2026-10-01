@@ -1,0 +1,7 @@
+---
+import Base from '../layouts/Base.astro';
+import { url } from '../lib/paths';
+---
+<Base title="Page not found">
+  <section class="container not-found"><span class="eyebrow">ERROR 404 / A SMALL DETOUR</span><div class="error-code" aria-hidden="true">4<span class="accent">0</span>4</div><h1>여기는 아직 빈 페이지예요.</h1><p>주소가 바뀌었거나 존재하지 않는 페이지입니다.<br />다시 익숙한 곳으로 돌아가 볼까요?</p><a href={url()} class="button button-primary">홈으로 돌아가기</a></section>
+</Base>
