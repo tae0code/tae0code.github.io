@@ -5,22 +5,109 @@ import Base from '../../layouts/Base.astro';
 import Icon from '../../components/Icon.astro';
 import { publishedPosts, readingMinutes } from '../../lib/posts';
 import { url, dateLabel } from '../../lib/paths';
-export async function getStaticPaths() { return (await publishedPosts()).map(post => ({ params: { slug: post.id }, props: { post } })); }
+export async function getStaticPaths() {
+  return (await publishedPosts()).map((post) => ({ params: { slug: post.id }, props: { post } }));
+}
 const { post } = Astro.props as { post: CollectionEntry<'posts'> };
 const { Content, headings } = await render(post);
-const other = (await publishedPosts()).find(p => p.id !== post.id);
+const other = (await publishedPosts()).find((p) => p.id !== post.id);
 ---
-<Base title={post.data.title} description={post.data.description} active="writing">
+
+<Base
+  title={post.data.title}
+  description={post.data.description}
+  active="writing"
+>
   <div class="article-container container">
-    <a href={url('writing/')} class="breadcrumb mono">WRITING / ALL NOTES</a>
-    <header class="article-header"><span class="eyebrow">{post.data.category.toUpperCase()}{post.data.starter && ' · STARTER NOTE'}</span><h1>{post.data.title}</h1><p>{post.data.description}</p><div class="article-meta"><time datetime={post.data.date.toISOString()}>{dateLabel(post.data.date)}</time><span>{readingMinutes(post.body)} min read</span><button type="button" data-copy="" class="icon-button" aria-label="글 주소 복사"><Icon name="copy" size={16} /></button></div><div class="tags">{post.data.tags.map(tag => <a href={url(`writing/?q=${encodeURIComponent(tag)}`)}><span>{tag}</span></a>)}</div></header>
-    <div class="article-layout"><article class="prose"><Content /></article><aside class="article-aside"><details open><summary class="mono">ON THIS PAGE</summary><nav aria-label="글 목차">{headings.filter(heading => heading.depth === 2).map(heading => <a href={`#${heading.slug}`}>{heading.text}</a>)}</nav></details><div class="aside-note mono">A LITTLE MORE<br />THAN YESTERDAY.</div></aside></div>
-    {other && <a class="next-note" href={url(`writing/${other.id}/`)}><span class="section-index mono">KEEP READING</span><h2>{other.data.title}<span class="accent">.</span></h2><p>{other.data.description}</p></a>}
+    <a
+      href={url('writing/')}
+      class="breadcrumb mono"
+    >
+      WRITING / ALL NOTES
+    </a>
+    <header class="article-header">
+      <span class="eyebrow">
+        {post.data.category.toUpperCase()}
+        {post.data.starter && ' · STARTER NOTE'}
+      </span>
+      <h1>{post.data.title}</h1>
+      <p>{post.data.description}</p>
+      <div class="article-meta">
+        <time datetime={post.data.date.toISOString()}>{dateLabel(post.data.date)}</time>
+        <span>{readingMinutes(post.body)} min read</span>
+        <button
+          type="button"
+          data-copy=""
+          class="icon-button"
+          aria-label="글 주소 복사"
+        >
+          <Icon
+            name="copy"
+            size={16}
+          />
+        </button>
+      </div>
+      <div class="tags">
+        {post.data.tags.map((tag) => (
+          <a href={url(`writing/?q=${encodeURIComponent(tag)}`)}>
+            <span>{tag}</span>
+          </a>
+        ))}
+      </div>
+    </header>
+    <div class="article-layout">
+      <article class="prose">
+        <Content />
+      </article>
+      <aside class="article-aside">
+        <details open>
+          <summary class="mono">ON THIS PAGE</summary>
+          <nav aria-label="글 목차">
+            {headings
+              .filter((heading) => heading.depth === 2)
+              .map((heading) => (
+                <a href={`#${heading.slug}`}>{heading.text}</a>
+              ))}
+          </nav>
+        </details>
+        <div class="aside-note mono">
+          A LITTLE MORE
+          <br />
+          THAN YESTERDAY.
+        </div>
+      </aside>
+    </div>
+    {other && (
+      <a
+        class="next-note"
+        href={url(`writing/${other.id}/`)}
+      >
+        <span class="section-index mono">KEEP READING</span>
+        <h2>
+          {other.data.title}
+          <span class="accent">.</span>
+        </h2>
+        <p>{other.data.description}</p>
+      </a>
+    )}
   </div>
   <script>
     const headings = document.querySelectorAll<HTMLElement>('.prose h2');
     const links = document.querySelectorAll<HTMLAnchorElement>('.article-aside nav a');
-    const headingObserver = new IntersectionObserver(entries => { for (const entry of entries) { if (entry.isIntersecting) links.forEach(link => link.classList.toggle('current', decodeURIComponent(link.hash.slice(1)) === entry.target.id)); } }, { rootMargin: '-5% 0px -70% 0px' });
-    headings.forEach(heading => headingObserver.observe(heading));
+    const headingObserver = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting)
+            links.forEach((link) =>
+              link.classList.toggle(
+                'current',
+                decodeURIComponent(link.hash.slice(1)) === entry.target.id,
+              ),
+            );
+        }
+      },
+      { rootMargin: '-5% 0px -70% 0px' },
+    );
+    headings.forEach((heading) => headingObserver.observe(heading));
   </script>
 </Base>

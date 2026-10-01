@@ -1,11 +1,64 @@
 ---
 import Icon from './Icon.astro';
 ---
+
 <div class="network-scene">
-  <div class="network-cross cross-one" aria-hidden="true">+</div><div class="network-cross cross-two" aria-hidden="true">+</div>
-  <span class="network-coordinate mono" aria-hidden="true">FIG. 001 / NEURAL NETWORK</span>
-  <canvas id="neural-network" aria-hidden="true"></canvas>
-  <div class="network-tag tag-one"><Icon name="spark" size={15} /> connected ideas</div>
-  <div class="network-bottom"><span class="mono">MOVE TO CONNECT. CLICK TO ACTIVATE.</span><div class="network-controls"><button id="network-activate" class="icon-button" aria-label="신경망 신호 보내기"><Icon name="spark" size={14} /></button><button id="motion-toggle" class="icon-button" aria-label="그래픽 애니메이션 일시 정지" aria-pressed="false"><Icon name="pause" size={14} /></button></div></div>
+  <div
+    class="network-cross cross-one"
+    aria-hidden="true"
+  >
+    +
+  </div>
+  <div
+    class="network-cross cross-two"
+    aria-hidden="true"
+  >
+    +
+  </div>
+  <span
+    class="network-coordinate mono"
+    aria-hidden="true"
+  >
+    FIG. 001 / NEURAL NETWORK
+  </span>
+  <canvas
+    id="neural-network"
+    aria-hidden="true"
+  ></canvas>
+  <div class="network-tag tag-one">
+    <Icon
+      name="spark"
+      size={15}
+    />{' '}
+    connected ideas
+  </div>
+  <div class="network-bottom">
+    <span class="mono">MOVE TO CONNECT. CLICK TO ACTIVATE.</span>
+    <div class="network-controls">
+      <button
+        id="network-activate"
+        class="icon-button"
+        aria-label="신경망 신호 보내기"
+      >
+        <Icon
+          name="spark"
+          size={14}
+        />
+      </button>
+      <button
+        id="motion-toggle"
+        class="icon-button"
+        aria-label="그래픽 애니메이션 일시 정지"
+        aria-pressed="false"
+      >
+        <Icon
+          name="pause"
+          size={14}
+        />
+      </button>
+    </div>
+  </div>
 </div>
-<script>import '../scripts/neural-network';</script>
+<script>
+  import '../scripts/neural-network';
+</script>

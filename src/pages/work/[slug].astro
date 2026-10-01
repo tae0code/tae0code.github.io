@@ -3,10 +3,113 @@ import Base from '../../layouts/Base.astro';
 import Icon from '../../components/Icon.astro';
 import { projects } from '../../data/projects';
 import { url } from '../../lib/paths';
-export function getStaticPaths() { return projects.map(project => ({ params: { slug: project.slug }, props: { project } })); }
+export function getStaticPaths() {
+  return projects.map((project) => ({ params: { slug: project.slug }, props: { project } }));
+}
 const { project } = Astro.props;
 ---
-<Base title={project.name} description={project.description} active="work">
-  <section class="page-intro container"><a class="breadcrumb mono" href={url('work/')}>WORK / ALL PROJECTS</a><h1 class="project-detail-title">{project.name}<span class="accent">.</span></h1><p class="project-lede">{project.description}</p><div class="project-facts"><div><span class="mono">ROLE</span><p>{project.role}</p></div><div><span class="mono">YEAR</span><p>{project.year}</p></div><div><span class="mono">STACK</span><p>{project.technologies.join(' / ')}</p></div><div><span class="mono">STATUS</span><p>{project.status}</p></div></div></section>
-  <section class="container case-study"><div class="case-banner"><span class="mono">PERSONAL SPACE / CASE STUDY</span><h2>A place for<br />what comes <em>next.</em></h2><div class="case-banner-bottom"><span class="mono">MAKE. LEARN. REPEAT.</span><Icon name="terminal" size={40} /></div></div><div class="case-story">{project.sections.map((section, index) => <section class="case-section reveal"><span class="section-index mono">0{index + 1} / THE PROCESS</span><div><h2>{section.title}</h2><p>{section.text}</p></div></section>)}</div><div class="case-actions">{project.demoUrl && <a href={project.demoUrl} target="_blank" rel="noopener noreferrer" class="button button-primary">라이브 사이트</a>}{project.sourceUrl && <a href={project.sourceUrl} target="_blank" rel="noopener noreferrer" class="button button-outline">소스 코드</a>}<a href={url('work/')} class="button button-outline">모든 프로젝트</a><button type="button" class="button button-quiet" data-copy=""><Icon name="copy" size={17} />링크 복사</button></div></section>
+
+<Base
+  title={project.name}
+  description={project.description}
+  active="work"
+>
+  <section class="page-intro container">
+    <a
+      class="breadcrumb mono"
+      href={url('work/')}
+    >
+      WORK / ALL PROJECTS
+    </a>
+    <h1 class="project-detail-title">
+      {project.name}
+      <span class="accent">.</span>
+    </h1>
+    <p class="project-lede">{project.description}</p>
+    <div class="project-facts">
+      <div>
+        <span class="mono">ROLE</span>
+        <p>{project.role}</p>
+      </div>
+      <div>
+        <span class="mono">YEAR</span>
+        <p>{project.year}</p>
+      </div>
+      <div>
+        <span class="mono">STACK</span>
+        <p>{project.technologies.join(' / ')}</p>
+      </div>
+      <div>
+        <span class="mono">STATUS</span>
+        <p>{project.status}</p>
+      </div>
+    </div>
+  </section>
+  <section class="container case-study">
+    <div class="case-banner">
+      <span class="mono">PERSONAL SPACE / CASE STUDY</span>
+      <h2>
+        A place for
+        <br />
+        what comes <em>next.</em>
+      </h2>
+      <div class="case-banner-bottom">
+        <span class="mono">MAKE. LEARN. REPEAT.</span>
+        <Icon
+          name="terminal"
+          size={40}
+        />
+      </div>
+    </div>
+    <div class="case-story">
+      {project.sections.map((section, index) => (
+        <section class="case-section reveal">
+          <span class="section-index mono">0{index + 1} / THE PROCESS</span>
+          <div>
+            <h2>{section.title}</h2>
+            <p>{section.text}</p>
+          </div>
+        </section>
+      ))}
+    </div>
+    <div class="case-actions">
+      {project.demoUrl && (
+        <a
+          href={project.demoUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="button button-primary"
+        >
+          라이브 사이트
+        </a>
+      )}
+      {project.sourceUrl && (
+        <a
+          href={project.sourceUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="button button-outline"
+        >
+          소스 코드
+        </a>
+      )}
+      <a
+        href={url('work/')}
+        class="button button-outline"
+      >
+        모든 프로젝트
+      </a>
+      <button
+        type="button"
+        class="button button-quiet"
+        data-copy=""
+      >
+        <Icon
+          name="copy"
+          size={17}
+        />
+        링크 복사
+      </button>
+    </div>
+  </section>
 </Base>

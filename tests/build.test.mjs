@@ -12,9 +12,11 @@ const siteRoot = new URL(rootCanonical);
 const base = siteRoot.pathname.replace(/\/$/, '');
 
 function filesIn(dir) {
-  return readdirSync(dir, { withFileTypes: true }).flatMap(entry => entry.isDirectory() ? filesIn(join(dir, entry.name)) : [join(dir, entry.name)]);
+  return readdirSync(dir, { withFileTypes: true }).flatMap((entry) =>
+    entry.isDirectory() ? filesIn(join(dir, entry.name)) : [join(dir, entry.name)],
+  );
 }
-const htmlFiles = filesIn(dist).filter(file => file.endsWith('.html'));
+const htmlFiles = filesIn(dist).filter((file) => file.endsWith('.html'));
 
 test('all generated pages have unique titles, descriptions, and a single h1', () => {
   const titles = new Set();
@@ -36,22 +38,31 @@ test('every internal page and asset link resolves under the configured Pages bas
       const raw = match[1].replaceAll('&amp;', '&');
       if (!raw.startsWith('/')) continue;
       const target = new URL(raw, siteRoot);
-      assert.ok(target.pathname === base || target.pathname.startsWith(`${base}/`), `${file}: link escaped base: ${raw}`);
+      assert.ok(
+        target.pathname === base || target.pathname.startsWith(`${base}/`),
+        `${file}: link escaped base: ${raw}`,
+      );
       const relative = decodeURIComponent(target.pathname.slice(base.length)).replace(/^\//, '');
       const local = join(dist, relative);
       assert.ok(existsSync(local), `${file}: broken link ${raw}`);
-      if (statSync(local).isDirectory()) assert.ok(existsSync(join(local, 'index.html')), `${file}: missing index for ${raw}`);
+      if (statSync(local).isDirectory())
+        assert.ok(existsSync(join(local, 'index.html')), `${file}: missing index for ${raw}`);
     }
   }
 });
 
 test('article tables of contents point to real headings', () => {
-  const articleFiles = htmlFiles.filter(file => file.includes(`${join('writing', '')}/`) && readFileSync(file, 'utf8').includes('article-aside'));
+  const articleFiles = htmlFiles.filter(
+    (file) =>
+      file.includes(`${join('writing', '')}/`) &&
+      readFileSync(file, 'utf8').includes('article-aside'),
+  );
   assert.ok(articleFiles.length > 0);
   for (const file of articleFiles) {
     const html = readFileSync(file, 'utf8');
-    const ids = new Set([...html.matchAll(/\bid="([^"]+)"/g)].map(match => match[1]));
-    for (const match of html.matchAll(/href="#([^"]+)"/g)) assert.ok(ids.has(decodeURIComponent(match[1])), `${file}: missing anchor ${match[1]}`);
+    const ids = new Set([...html.matchAll(/\bid="([^"]+)"/g)].map((match) => match[1]));
+    for (const match of html.matchAll(/href="#([^"]+)"/g))
+      assert.ok(ids.has(decodeURIComponent(match[1])), `${file}: missing anchor ${match[1]}`);
   }
 });
 

@@ -20,16 +20,27 @@ npm test
 npm run preview
 ```
 
+## 코드 포맷
+
+Astro, TypeScript, CSS와 설정 파일은 Prettier로 정리합니다. 들여쓰기는 공백 2칸, 줄 길이는 100자를 기준으로 하며 Astro 태그의 속성은 한 줄에 하나씩 표시합니다. 블로그 본문과 자동 생성 파일은 포맷 대상에서 제외합니다.
+
+```sh
+npm run format        # 코드 줄바꿈과 들여쓰기 정리
+npm run format:check  # 수정 없이 형식 검사
+```
+
+GitHub Actions에서도 형식을 검사합니다. 기능 변경 후 `npm run format`을 실행하면 같은 스타일을 유지할 수 있습니다.
+
 ## 내 콘텐츠로 바꾸기
 
-| 내용 | 위치 |
-| --- | --- |
-| 이름, 소개, 연락처, 기술, 경력, 학력 | `src/data/profile.ts` |
-| 프로젝트 목록과 상세 내용 | `src/data/projects.ts` |
-| 블로그 글 | `src/content/posts/*.md` |
-| PDF 이력서 | `public/resume.pdf` |
-| 색상, 글꼴, 반응형 디자인 | `src/styles/global.css` |
-| 첫 화면 구성과 대표 프로젝트 카드 | `src/pages/index.astro` |
+| 내용                                 | 위치                     |
+| ------------------------------------ | ------------------------ |
+| 이름, 소개, 연락처, 기술, 경력, 학력 | `src/data/profile.ts`    |
+| 프로젝트 목록과 상세 내용            | `src/data/projects.ts`   |
+| 블로그 글                            | `src/content/posts/*.md` |
+| PDF 이력서                           | `public/resume.pdf`      |
+| 색상, 글꼴, 반응형 디자인            | `src/styles/global.css`  |
+| 첫 화면 구성과 대표 프로젝트 카드    | `src/pages/index.astro`  |
 
 현재 자기소개와 기술 목록은 수정 가능한 예시이며, 실제 경력이나 학력은 넣지 않았습니다. 이름은 작업 환경의 `tae0code`를 사용했습니다. `STARTER NOTE`가 붙은 세 글은 시작을 위한 예시입니다. 실제 게시 전 직접 쓴 글로 교체하거나 `draft: true`로 숨기세요. 빈 이메일·GitHub·LinkedIn 링크는 자동으로 숨겨집니다.
 
@@ -59,8 +70,8 @@ education: [
 
 ```markdown
 ---
-title: "첫 번째 글"
-description: "글 목록에 표시할 짧은 설명"
+title: '첫 번째 글'
+description: '글 목록에 표시할 짧은 설명'
 date: 2026-10-01
 category: Notes
 tags: [TypeScript, Learning]

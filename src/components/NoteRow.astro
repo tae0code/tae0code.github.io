@@ -2,12 +2,37 @@
 import type { CollectionEntry } from 'astro:content';
 import { url, dateLabel } from '../lib/paths';
 import { readingMinutes } from '../lib/posts';
-interface Props { post: CollectionEntry<'posts'>; index: number; }
+interface Props {
+  post: CollectionEntry<'posts'>;
+  index: number;
+}
 const { post, index } = Astro.props;
 ---
-<a class="note-row" href={url(`writing/${post.id}/`)} data-post data-category={post.data.category} data-search={`${post.data.title} ${post.data.description} ${post.data.tags.join(' ')}`.toLocaleLowerCase()}>
+
+<a
+  class="note-row"
+  href={url(`writing/${post.id}/`)}
+  data-post
+  data-category={post.data.category}
+  data-search={`${post.data.title} ${post.data.description} ${post.data.tags.join(' ')}`.toLocaleLowerCase()}
+>
   <span class="note-number mono">{String(index + 1).padStart(2, '0')}</span>
-  <div><span class="note-category mono">{post.data.category.toUpperCase()}{post.data.starter && ' · STARTER NOTE'}</span><h3>{post.data.title}</h3><p>{post.data.description}</p></div>
-  <span class="note-date mono"><time datetime={post.data.date.toISOString()}>{dateLabel(post.data.date).toUpperCase()}</time><span>{readingMinutes(post.body)} MIN READ</span></span>
-  <span class="note-end" aria-hidden="true">+</span>
+  <div>
+    <span class="note-category mono">
+      {post.data.category.toUpperCase()}
+      {post.data.starter && ' · STARTER NOTE'}
+    </span>
+    <h3>{post.data.title}</h3>
+    <p>{post.data.description}</p>
+  </div>
+  <span class="note-date mono">
+    <time datetime={post.data.date.toISOString()}>{dateLabel(post.data.date).toUpperCase()}</time>
+    <span>{readingMinutes(post.body)} MIN READ</span>
+  </span>
+  <span
+    class="note-end"
+    aria-hidden="true"
+  >
+    +
+  </span>
 </a>

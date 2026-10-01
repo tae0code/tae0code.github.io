@@ -4,34 +4,268 @@ import Icon from '../components/Icon.astro';
 import { profile } from '../data/profile';
 import { url } from '../lib/paths';
 ---
-<Base title="The human behind the code" active="about">
-  <section class="page-intro container"><span class="eyebrow"><span class="small-line"></span> THE HUMAN BEHIND THE CODE</span><h1>Curious by nature.<br /><span class="serif-word">Builder by choice<span class="accent">.</span></span></h1></section>
-  <section class="container about-layout"><div class="about-story"><span class="section-index mono">HELLO, I'M {profile.name.toUpperCase()}</span><h2>{profile.tagline}</h2><p>{profile.intro}</p><p>{profile.about}</p><div class="about-principles"><div><span class="mono accent">01</span><p><strong>Understand first.</strong>좋은 질문이 좋은 코드의 시작이라고 생각합니다.</p></div><div><span class="mono accent">02</span><p><strong>Make it thoughtful.</strong>작은 디테일이 만드는 차이를 중요하게 생각합니다.</p></div><div><span class="mono accent">03</span><p><strong>Never stop learning.</strong>새롭게 배운 것을 기록하고 나누고 싶습니다.</p></div></div><a class="button button-primary" href={url('resume/')}><Icon name="file" size={17} />이력서 보기</a></div>
-    <div class="about-terminal"><div class="terminal-titlebar"><span class="terminal-dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="mono">{profile.name} — zsh</span><Icon name="terminal" size={14} /></div><div class="terminal-output" id="terminal-output" role="log" aria-live="polite" aria-label="터미널 출력"><p class="terminal-command"><span>❯</span> cat about.json</p><pre>{JSON.stringify({ name: profile.name, role: profile.role, interests: ['building useful things', 'thoughtful interfaces', 'learning in public'], status: 'always a work in progress' }, null, 2)}</pre><p class="terminal-hint">Type 'help' to explore. Make yourself at home.</p></div><form id="terminal-form" class="terminal-form"><span class="accent" aria-hidden="true">❯</span><label for="terminal-input" class="sr-only">터미널 명령어</label><input id="terminal-input" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="help" maxlength="100" /><button type="submit" aria-label="명령어 실행">Enter</button></form><div class="terminal-footer mono">A SMALL TERMINAL. A LITTLE PERSONALITY.</div><noscript><p class="terminal-hint">명령어 실행은 JavaScript를 켜면 사용할 수 있습니다.</p></noscript></div>
+
+<Base
+  title="The human behind the code"
+  active="about"
+>
+  <section class="page-intro container">
+    <span class="eyebrow">
+      <span class="small-line"></span> THE HUMAN BEHIND THE CODE
+    </span>
+    <h1>
+      Curious by nature.
+      <br />
+      <span class="serif-word">
+        Builder by choice<span class="accent">.</span>
+      </span>
+    </h1>
   </section>
-  <section class="container about-toolbox reveal"><div><span class="section-index mono">TOOLS FOR TURNING IDEAS INTO REALITY</span><h2>My current toolbox<span class="accent">.</span></h2><p>관심 있는 기술을 하나씩 익히고 연결합니다.</p></div><div class="large-tags">{profile.skills.map((skill, i) => <span><span class="mono">0{i + 1}</span>{skill}</span>)}</div></section>
-  <section class="container contact-block reveal"><span class="section-index mono">GOOD THINGS START WITH A CONVERSATION</span><h2>Let's make<br /><span class="serif-word">something meaningful<span class="accent">.</span></span></h2><div class="contact-actions">{profile.email ? <><a href={`mailto:${profile.email}`} class="button button-primary"><Icon name="mail" size={17} />{profile.email}</a><button type="button" class="icon-button" data-copy={profile.email} aria-label="이메일 주소 복사"><Icon name="copy" size={18} /></button></> : <p class="muted">연락처는 곧 업데이트됩니다. 그동안 글과 프로젝트를 둘러보세요.</p>}{profile.github && <a class="button button-outline" href={profile.github} target="_blank" rel="noopener noreferrer">GitHub</a>}{profile.linkedin && <a class="button button-outline" href={profile.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>}</div></section>
-  <script define:vars={{ profileName: profile.name, role: profile.role, skills: profile.skills, workUrl: url('work/'), writingUrl: url('writing/'), resumeUrl: url('resume/') }}>
+  <section class="container about-layout">
+    <div class="about-story">
+      <span class="section-index mono">HELLO, I'M {profile.name.toUpperCase()}</span>
+      <h2>{profile.tagline}</h2>
+      <p>{profile.intro}</p>
+      <p>{profile.about}</p>
+      <div class="about-principles">
+        <div>
+          <span class="mono accent">01</span>
+          <p>
+            <strong>Understand first.</strong>좋은 질문이 좋은 코드의 시작이라고 생각합니다.
+          </p>
+        </div>
+        <div>
+          <span class="mono accent">02</span>
+          <p>
+            <strong>Make it thoughtful.</strong>작은 디테일이 만드는 차이를 중요하게 생각합니다.
+          </p>
+        </div>
+        <div>
+          <span class="mono accent">03</span>
+          <p>
+            <strong>Never stop learning.</strong>새롭게 배운 것을 기록하고 나누고 싶습니다.
+          </p>
+        </div>
+      </div>
+      <a
+        class="button button-primary"
+        href={url('resume/')}
+      >
+        <Icon
+          name="file"
+          size={17}
+        />
+        이력서 보기
+      </a>
+    </div>
+    <div class="about-terminal">
+      <div class="terminal-titlebar">
+        <span
+          class="terminal-dots"
+          aria-hidden="true"
+        >
+          <i></i>
+          <i></i>
+          <i></i>
+        </span>
+        <span class="mono">{profile.name} — zsh</span>
+        <Icon
+          name="terminal"
+          size={14}
+        />
+      </div>
+      <div
+        class="terminal-output"
+        id="terminal-output"
+        role="log"
+        aria-live="polite"
+        aria-label="터미널 출력"
+      >
+        <p class="terminal-command">
+          <span>❯</span> cat about.json
+        </p>
+        <pre>{JSON.stringify({ name: profile.name, role: profile.role, interests: ['building useful things', 'thoughtful interfaces', 'learning in public'], status: 'always a work in progress' }, null, 2)}</pre>
+        <p class="terminal-hint">Type 'help' to explore. Make yourself at home.</p>
+      </div>
+      <form
+        id="terminal-form"
+        class="terminal-form"
+      >
+        <span
+          class="accent"
+          aria-hidden="true"
+        >
+          ❯
+        </span>
+        <label
+          for="terminal-input"
+          class="sr-only"
+        >
+          터미널 명령어
+        </label>
+        <input
+          id="terminal-input"
+          type="text"
+          autocomplete="off"
+          autocapitalize="off"
+          spellcheck="false"
+          placeholder="help"
+          maxlength="100"
+        />
+        <button
+          type="submit"
+          aria-label="명령어 실행"
+        >
+          Enter
+        </button>
+      </form>
+      <div class="terminal-footer mono">A SMALL TERMINAL. A LITTLE PERSONALITY.</div>
+      <noscript>
+        <p class="terminal-hint">명령어 실행은 JavaScript를 켜면 사용할 수 있습니다.</p>
+      </noscript>
+    </div>
+  </section>
+  <section class="container about-toolbox reveal">
+    <div>
+      <span class="section-index mono">TOOLS FOR TURNING IDEAS INTO REALITY</span>
+      <h2>
+        My current toolbox<span class="accent">.</span>
+      </h2>
+      <p>관심 있는 기술을 하나씩 익히고 연결합니다.</p>
+    </div>
+    <div class="large-tags">
+      {profile.skills.map((skill, i) => (
+        <span>
+          <span class="mono">0{i + 1}</span>
+          {skill}
+        </span>
+      ))}
+    </div>
+  </section>
+  <section class="container contact-block reveal">
+    <span class="section-index mono">GOOD THINGS START WITH A CONVERSATION</span>
+    <h2>
+      Let's make
+      <br />
+      <span class="serif-word">
+        something meaningful<span class="accent">.</span>
+      </span>
+    </h2>
+    <div class="contact-actions">
+      {profile.email ? (
+        <>
+          <a
+            href={`mailto:${profile.email}`}
+            class="button button-primary"
+          >
+            <Icon
+              name="mail"
+              size={17}
+            />
+            {profile.email}
+          </a>
+          <button
+            type="button"
+            class="icon-button"
+            data-copy={profile.email}
+            aria-label="이메일 주소 복사"
+          >
+            <Icon
+              name="copy"
+              size={18}
+            />
+          </button>
+        </>
+      ) : (
+        <p class="muted">연락처는 곧 업데이트됩니다. 그동안 글과 프로젝트를 둘러보세요.</p>
+      )}
+      {profile.github && (
+        <a
+          class="button button-outline"
+          href={profile.github}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          GitHub
+        </a>
+      )}
+      {profile.linkedin && (
+        <a
+          class="button button-outline"
+          href={profile.linkedin}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          LinkedIn
+        </a>
+      )}
+    </div>
+  </section>
+  <script
+    define:vars={{
+      profileName: profile.name,
+      role: profile.role,
+      skills: profile.skills,
+      workUrl: url('work/'),
+      writingUrl: url('writing/'),
+      resumeUrl: url('resume/'),
+    }}
+  >
     const terminalForm = document.querySelector('#terminal-form');
     const terminalInput = document.querySelector('#terminal-input');
     const terminalOutput = document.querySelector('#terminal-output');
-    const history = []; let historyIndex = 0;
-    terminalForm?.addEventListener('submit', event => {
-      event.preventDefault(); const raw = terminalInput.value.trim(); if (!raw) return;
-      const command = raw.toLowerCase(); history.push(raw); historyIndex = history.length; terminalInput.value = '';
-      if (command === 'clear') { terminalOutput.replaceChildren(); return; }
-      const prompt = document.createElement('p'); prompt.className = 'terminal-command'; prompt.textContent = `❯ ${raw}`; terminalOutput.append(prompt);
-      const response = document.createElement('p'); response.className = 'terminal-response';
-      const commands = { help: 'about     짧은 자기소개\nskills    관심 기술\nprojects  프로젝트 열기\nblog      글 목록 열기\nresume    이력서 열기\nclear     화면 지우기', about: `${profileName}\n${role}\n작은 호기심을, 더 나은 경험으로.`, skills: skills.join(' · '), whoami: 'A curious visitor. Welcome to my little corner of the internet.', hello: 'Hello, world. 반가워요! 👋', ls: 'about.json  projects/  writing/  resume/', coffee: '☕ Brewing ideas... ready.' };
+    const history = [];
+    let historyIndex = 0;
+    terminalForm?.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const raw = terminalInput.value.trim();
+      if (!raw) return;
+      const command = raw.toLowerCase();
+      history.push(raw);
+      historyIndex = history.length;
+      terminalInput.value = '';
+      if (command === 'clear') {
+        terminalOutput.replaceChildren();
+        return;
+      }
+      const prompt = document.createElement('p');
+      prompt.className = 'terminal-command';
+      prompt.textContent = `❯ ${raw}`;
+      terminalOutput.append(prompt);
+      const response = document.createElement('p');
+      response.className = 'terminal-response';
+      const commands = {
+        help: 'about     짧은 자기소개\nskills    관심 기술\nprojects  프로젝트 열기\nblog      글 목록 열기\nresume    이력서 열기\nclear     화면 지우기',
+        about: `${profileName}\n${role}\n작은 호기심을, 더 나은 경험으로.`,
+        skills: skills.join(' · '),
+        whoami: 'A curious visitor. Welcome to my little corner of the internet.',
+        hello: 'Hello, world. 반가워요! 👋',
+        ls: 'about.json  projects/  writing/  resume/',
+        coffee: '☕ Brewing ideas... ready.',
+      };
       const destinations = { projects: workUrl, blog: writingUrl, resume: resumeUrl };
-      if (destinations[command]) { location.assign(destinations[command]); return; }
-      response.textContent = commands[command] || `명령어를 찾을 수 없습니다: ${raw}\n'help'를 입력하면 사용 가능한 명령어가 나옵니다.`;
-      terminalOutput.append(response); terminalOutput.scrollTop = terminalOutput.scrollHeight;
+      if (destinations[command]) {
+        location.assign(destinations[command]);
+        return;
+      }
+      response.textContent =
+        commands[command] ||
+        `명령어를 찾을 수 없습니다: ${raw}\n'help'를 입력하면 사용 가능한 명령어가 나옵니다.`;
+      terminalOutput.append(response);
+      terminalOutput.scrollTop = terminalOutput.scrollHeight;
       while (terminalOutput.childElementCount > 40) terminalOutput.firstElementChild.remove();
     });
-    terminalInput?.addEventListener('keydown', event => {
-      if (event.key === 'ArrowUp') { event.preventDefault(); historyIndex = Math.max(0, historyIndex - 1); terminalInput.value = history[historyIndex] || ''; }
-      if (event.key === 'ArrowDown') { event.preventDefault(); historyIndex = Math.min(history.length, historyIndex + 1); terminalInput.value = history[historyIndex] || ''; }
+    terminalInput?.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowUp') {
+        event.preventDefault();
+        historyIndex = Math.max(0, historyIndex - 1);
+        terminalInput.value = history[historyIndex] || '';
+      }
+      if (event.key === 'ArrowDown') {
+        event.preventDefault();
+        historyIndex = Math.min(history.length, historyIndex + 1);
+        terminalInput.value = history[historyIndex] || '';
+      }
     });
   </script>
 </Base>

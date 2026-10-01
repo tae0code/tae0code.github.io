@@ -1,0 +1,8 @@
+node_modules/
+dist/
+.astro/
+.qa/
+package-lock.json
+src/content/
+.env
+.env.*
